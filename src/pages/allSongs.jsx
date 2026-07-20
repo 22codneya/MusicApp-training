@@ -1,22 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import MusicGrid from "../components/MusicGrid";
 import { Link } from "react-router-dom";
+import useAudioPlayer from "../store/useAudioPlayer";
 
 function AllSongs() {
   const [songs, setSongs] = useState([]);
+  const{playSong ,pauseSong}=useAudioPlayer()
   const [loading, setLoading] = useState(true);
-  const currentAudioRef = useRef(null);
+//   const currentAudioRef = useRef(null);
   const [searchedText, setSearchedTerm] = useState("billie ellish");
   const [debouncedTerm, setDebouncedTerm] = useState(searchedText);
 
-  function onPlay(preview) {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-    }
-    const audio = new Audio(preview);
-    audio.play();
-    currentAudioRef.current = audio;
-  }
+//   function onPlay(preview) {
+//     if (currentAudioRef.current) {
+//       currentAudioRef.current.pause();
+//     }
+//     const audio = new Audio(preview);
+//     audio.play();
+//     currentAudioRef.current = audio;
+//   }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,11 +45,11 @@ function AllSongs() {
     return () => clearTimeout(timer);
   }, [searchedText]);
 
-  const pauseSong = () => {
-    if (currentAudioRef.current) {
-      currentAudioRef.current.pause();
-    }
-  };
+//   const pauseSong = () => {
+//     if (currentAudioRef.current) {
+//       currentAudioRef.current.pause();
+//     }
+//   };
   return (
     <>
       {/* //navbar */}
@@ -94,7 +96,7 @@ function AllSongs() {
       {loading ? (
         <h3>Loading data</h3>
       ) : (
-        <MusicGrid songsArray={songs} onPlay={onPlay} pauseSong={pauseSong} />
+        <MusicGrid songsArray={songs} onPlay={playSong} pauseSong={pauseSong} />
       )}
     </>
   );

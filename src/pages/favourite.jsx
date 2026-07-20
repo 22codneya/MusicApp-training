@@ -1,8 +1,11 @@
 import MusicCard from "../components/MusicCard";
 import FavStore from "../store/FavStore";
+import useAudioPlayer from "../store/useAudioPlayer";
 
 const Favourite = () => {
   const { favourites } = FavStore();
+    const{playSong ,pauseSong}=useAudioPlayer()
+
   console.log("favourites yeh rhe", favourites);
   return (
     <>
@@ -13,8 +16,8 @@ const Favourite = () => {
         {favourites.map((fav) => (
           <MusicCard
             singleSong={fav}
-            playSong={() => {}}
-            pauseSong={() => {}}
+            playSong={playSong}
+            pauseSong={pauseSong}
           />
         ))}
         </div>
